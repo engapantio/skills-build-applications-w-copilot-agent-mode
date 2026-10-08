@@ -1,0 +1,103 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.app-navbar {
+  background: #173f2b;
+}
+
+.app-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  object-fit: contain;
+}
+
+.app-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.app-navbar .nav-link.active {
+  color: #173f2b;
+}
+
+.app-content {
+  flex: 1;
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+
+.page-heading {
+  margin-bottom: 2rem;
+}
+
+.page-heading h1 {
+  margin: 0.25rem 0 0.5rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #32744c;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resource-card {
+  overflow: hidden;
+  border: 1px solid #e0e9e1;
+  border-radius: 0.9rem;
+  background: #fff;
+  box-shadow: 0 0.25rem 1rem rgba(23, 63, 43, 0.05);
+}
+
+.resource-card .card-title {
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+.empty-state {
+  padding: 2rem;
+  border: 1px dashed #bdcdbf;
+  border-radius: 0.9rem;
+  background: #fff;
+  color: #5c6c60;
+  text-align: center;
+}
+
+.app-footer {
+  padding: 1.25rem 0;
+  background: #e8efe9;
+  color: #526257;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 767.98px) {
+  .app-navbar .container {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .app-navbar .nav {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .app-navbar .nav-link {
+    white-space: nowrap;
+  }
+
+  .app-content {
+    padding-top: 2rem;
+  }
+}
