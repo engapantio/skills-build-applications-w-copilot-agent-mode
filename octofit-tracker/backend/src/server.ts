@@ -12,7 +12,7 @@ const port = Number(process.env.PORT ?? 8000);
 const codespaceName = process.env.CODESPACE_NAME;
 const apiBaseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
-  : `http://localhost:${port}`;
+  : 'http://localhost:8000';
 const frontendOrigins = new Set([
   'http://localhost:5173',
   'http://127.0.0.1:5173',
