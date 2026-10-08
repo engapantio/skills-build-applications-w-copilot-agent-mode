@@ -7,7 +7,7 @@ export interface Team {
   totalPoints: number;
 }
 
-const teamSchema = new Schema<Team>(
+const teamSchema = new Schema(
   {
     name: { type: String, required: true, trim: true, minlength: 2 },
     description: { type: String, trim: true },
@@ -19,4 +19,6 @@ const teamSchema = new Schema<Team>(
 
 teamSchema.index({ name: 1 }, { unique: true });
 
-export const TeamModel = model<Team>('Team', teamSchema);
+const Team = model('Team', teamSchema);
+
+export default Team;

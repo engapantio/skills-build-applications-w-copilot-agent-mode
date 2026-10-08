@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
-import { ActivityModel } from '../models/activity.js';
-import { LeaderboardModel } from '../models/leaderboard.js';
-import { TeamModel } from '../models/team.js';
-import { UserModel } from '../models/user.js';
-import { WorkoutModel } from '../models/workout.js';
+import Activity from '../models/activity.js';
+import Leaderboard from '../models/leaderboard.js';
+import Team from '../models/team.js';
+import User from '../models/user.js';
+import Workout from '../models/workout.js';
 
 /**
- * Add or update the Octofit demo records without removing existing data.
+ * Seed the octofit_db database with test data, updating existing demo records.
  */
 async function seedDatabase() {
   const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
@@ -72,27 +72,32 @@ async function seedDatabase() {
     ];
 
     for (const team of teams) {
-      await TeamModel.findByIdAndUpdate(
-        team.id,
-        { $set: { name: team.name, description: team.description, members: team.members, totalPoints: team.totalPoints } },
-        { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true },
-      );
+      const data = {
+        name: team.name,
+        description: team.description,
+        members: team.members,
+        totalPoints: team.totalPoints,
+      };
+      if (await Team.exists({ _id: team.id })) {
+        await Team.updateOne({ _id: team.id }, { $set: data }, { runValidators: true });
+      } else {
+        await Team.create({ _id: team.id, ...data });
+      }
     }
 
     for (const user of users) {
-      await UserModel.findByIdAndUpdate(
-        user.id,
-        {
-          $set: {
-            username: user.username,
-            email: user.email,
-            displayName: user.displayName,
-            teamId: new mongoose.Types.ObjectId(user.teamId),
-            totalPoints: user.totalPoints,
-          },
-        },
-        { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true },
-      );
+      const data = {
+        username: user.username,
+        email: user.email,
+        displayName: user.displayName,
+        teamId: new mongoose.Types.ObjectId(user.teamId),
+        totalPoints: user.totalPoints,
+      };
+      if (await User.exists({ _id: user.id })) {
+        await User.updateOne({ _id: user.id }, { $set: data }, { runValidators: true });
+      } else {
+        await User.create({ _id: user.id, ...data });
+      }
     }
 
     const activities = [
@@ -135,20 +140,19 @@ async function seedDatabase() {
     ];
 
     for (const activity of activities) {
-      await ActivityModel.findByIdAndUpdate(
-        activity.id,
-        {
-          $set: {
-            userId: new mongoose.Types.ObjectId(activity.userId),
-            activityType: activity.activityType,
-            durationMinutes: activity.durationMinutes,
-            caloriesBurned: activity.caloriesBurned,
-            date: activity.date,
-            notes: activity.notes,
-          },
-        },
-        { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true },
-      );
+      const data = {
+        userId: new mongoose.Types.ObjectId(activity.userId),
+        activityType: activity.activityType,
+        durationMinutes: activity.durationMinutes,
+        caloriesBurned: activity.caloriesBurned,
+        date: activity.date,
+        notes: activity.notes,
+      };
+      if (await Activity.exists({ _id: activity.id })) {
+        await Activity.updateOne({ _id: activity.id }, { $set: data }, { runValidators: true });
+      } else {
+        await Activity.create({ _id: activity.id, ...data });
+      }
     }
 
     const leaderboardEntries = [
@@ -161,17 +165,16 @@ async function seedDatabase() {
     ];
 
     for (const entry of leaderboardEntries) {
-      await LeaderboardModel.findByIdAndUpdate(
-        entry.id,
-        {
-          $set: {
-            ...(entry.userId && { userId: new mongoose.Types.ObjectId(entry.userId) }),
-            ...(entry.teamId && { teamId: new mongoose.Types.ObjectId(entry.teamId) }),
-            score: entry.score,
-          },
-        },
-        { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true },
-      );
+      const data = {
+        ...(entry.userId && { userId: new mongoose.Types.ObjectId(entry.userId) }),
+        ...(entry.teamId && { teamId: new mongoose.Types.ObjectId(entry.teamId) }),
+        score: entry.score,
+      };
+      if (await Leaderboard.exists({ _id: entry.id })) {
+        await Leaderboard.updateOne({ _id: entry.id }, { $set: data }, { runValidators: true });
+      } else {
+        await Leaderboard.create({ _id: entry.id, ...data });
+      }
     }
 
     const workouts = [
@@ -210,19 +213,18 @@ async function seedDatabase() {
     ];
 
     for (const workout of workouts) {
-      await WorkoutModel.findByIdAndUpdate(
-        workout.id,
-        {
-          $set: {
-            name: workout.name,
-            description: workout.description,
-            difficulty: workout.difficulty,
-            durationMinutes: workout.durationMinutes,
-            exercises: workout.exercises,
-          },
-        },
-        { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true },
-      );
+      const data = {
+        name: workout.name,
+        description: workout.description,
+        difficulty: workout.difficulty,
+        durationMinutes: workout.durationMinutes,
+        exercises: workout.exercises,
+      };
+      if (await Workout.exists({ _id: workout.id })) {
+        await Workout.updateOne({ _id: workout.id }, { $set: data }, { runValidators: true });
+      } else {
+        await Workout.create({ _id: workout.id, ...data });
+      }
     }
 
     console.log(

@@ -6,7 +6,7 @@ export interface LeaderboardEntry {
   score: number;
 }
 
-const leaderboardSchema = new Schema<LeaderboardEntry>(
+const leaderboardSchema = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
     teamId: { type: Schema.Types.ObjectId, ref: 'Team' },
@@ -21,4 +21,6 @@ leaderboardSchema.pre('validate', function () {
   }
 });
 
-export const LeaderboardModel = model<LeaderboardEntry>('Leaderboard', leaderboardSchema);
+const Leaderboard = model('Leaderboard', leaderboardSchema);
+
+export default Leaderboard;

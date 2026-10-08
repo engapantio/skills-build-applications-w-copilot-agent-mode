@@ -8,7 +8,7 @@ export interface User {
   totalPoints: number;
 }
 
-const userSchema = new Schema<User>(
+const userSchema = new Schema(
   {
     username: { type: String, required: true, trim: true, minlength: 2 },
     email: { type: String, required: true, lowercase: true, trim: true },
@@ -22,4 +22,6 @@ const userSchema = new Schema<User>(
 userSchema.index({ username: 1 }, { unique: true });
 userSchema.index({ email: 1 }, { unique: true });
 
-export const UserModel = model<User>('User', userSchema);
+const User = model('User', userSchema);
+
+export default User;

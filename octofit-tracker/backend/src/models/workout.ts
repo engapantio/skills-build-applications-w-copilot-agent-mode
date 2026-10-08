@@ -8,7 +8,7 @@ export interface Workout {
   exercises: string[];
 }
 
-const workoutSchema = new Schema<Workout>(
+const workoutSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     description: { type: String, trim: true },
@@ -19,4 +19,6 @@ const workoutSchema = new Schema<Workout>(
   { timestamps: true },
 );
 
-export const WorkoutModel = model<Workout>('Workout', workoutSchema);
+const Workout = model('Workout', workoutSchema);
+
+export default Workout;
